@@ -1,0 +1,74 @@
+@model MVC.Models.Patient
+
+@{
+    ViewData["Title"] = "Uredi pacijenta";
+}
+
+<div class="container-fluid">
+    <form id="updateForm">
+        <input type="hidden" asp-for="@Model.Ssn" />
+        <div class="form-group">
+            <label for="ime">Broj socijalnog osiguranja:</label>
+            <input asp-for="@Model.Ssn" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Ime i prezime</label>
+            <input asp-for="@Model.Name" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Adresa</label>
+            <input asp-for="@Model.Address" class="form-control" />
+        </div>
+                <div class="form-group">
+            <label>Broj telefona</label>
+            <input asp-for="@Model.Phone" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Broj osiguranja</label>
+            <input asp-for="@Model.InsuranceId" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Liječnik</label>
+            <select class="form-control" asp-for="@Model.Pcp">
+                <option selected disabled>Odaberite liječnika</option>
+            </select>
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-outline-secondary" asp-controller="Patients" asp-action="Index">Odustani</a>
+            <button class="btn btn-primary" type="submit">Spremi</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    $("#updateForm").on("submit", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: "PUT",
+            url: "/Patients/UpdatePatient",
+            data: $("#updateForm").serialize(),
+            success: function (data) {
+                alert('Uspješno uređen pacijent.')
+                window.location.href = "/Patients/Index"
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        })
+    });
+
+    
+    $.ajax({
+        url: "/Physicians/GetAllPhysicians",
+        success: function (data) {
+            data.forEach(function (item) {
+                $("#Pcp").append(`<option value="${item.employeeId}">${item.name}</option>`)                
+            })
+        },
+        error: function (data) {
+            console.log(data)
+        }
+    })
+</script>
+

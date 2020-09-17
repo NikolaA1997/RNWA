@@ -1,0 +1,104 @@
+@model IEnumerable<MVC.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Pregledi";
+}
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-4">
+            <a class="btn btn-primary" asp-controller="Appointments" asp-action="Create">Dodaj novi pregled</a>
+        </div>                       
+    </div>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>                    
+                <th scope="col">Pacijent</th>
+                <th scope="col">Liječnik</th>
+                <th scope="col">Početak</th>
+                <th scope="col">Kraj</th>
+                <th scope="col">Soba</th>
+                <th scope="col">Akcije</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+</div>
+
+<div class="modal" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Brisanje pregleda</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="delId" />
+                <p>Jeste li sigurni da želite obrisati pregled?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Odustani</button>
+                <button type="button" id="confirm" class="btn btn-primary">Potvrdi</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function() {
+    url = new URL(window.location.href);
+    physicianId = url.searchParams.get('PhysicianId')
+    
+    if (physicianId) {
+         $.ajax({
+            url: `/Appointments/GetAppointmentsByPhysicianId?physicianId=${physicianId}`,
+            success: function (data) {
+                data.forEach(function (item) {
+                    $("tbody").append(`<tr><td>${item.patientNavigation.name}</td><td>${item.physicianNavigation.name}</td><td>${item.start}</td><td>${item.end}</td><td>${item.examinationRoom}</td><td><a class="btn btn-secondary" onclick="update(${item.appointmentId})">Uredi</a>&nbsp;<a class="btn btn-danger" onclick="odm(${item.appointmentId})">Briši</a></td></tr>`);
+                });
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        });
+    } else {
+            $.ajax({
+            url: "/Appointments/GetAllAppointments",
+            success: function (data) {
+                data.forEach(function (item) {
+                    $("tbody").append(`<tr><td>${item.patientNavigation.name}</td><td>${item.physicianNavigation.name}</td><td>${item.start}</td><td>${item.end}</td><td>${item.examinationRoom}</td><td><a class="btn btn-secondary" onclick="update(${item.appointmentId})">Uredi</a>&nbsp;<a class="btn btn-danger" onclick="odm(${item.appointmentId})">Briši</a></td></tr>`);
+                });
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        });
+      }
+    })()
+
+    function update(appointmentId) {
+        window.location.href = `/Appointments/Update/${appointmentId}`
+    }
+
+   function odm(appointmentId) {
+        $("#delId").val(appointmentId);
+        $("#deleteModal").show();
+    }
+
+    $("#confirm").on("click", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: "DELETE",
+            url: "Appointments/Delete",
+            data: { 'id': $("#delId").val() },
+            success: function (data) {
+                $("#deleteModal").hide();
+                window.location.reload()
+            }
+        })
+    })
+</script>

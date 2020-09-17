@@ -1,0 +1,104 @@
+@{
+    ViewData["Title"] = "Popis svih liječnika";
+}
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-4">
+            <input type="text" placeholder="Pretraga" id="search" class="form-control" />
+        </div>
+        <div class="col-4">
+            <a class="btn btn-primary" asp-controller="Physicians" asp-action="Create">Dodaj novog liječnika</a>
+        </div>                       
+    </div>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>                    
+                <th scope="col">Ime i prezime</th>
+                <th scope="col">Radno mjesto</th>
+                <th scope="col">Broj socijalnog osiguranja</th>
+                <th scope="col">Akcije</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+</div>
+
+<div class="modal" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Brisanje liječnika</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="delId" />
+                <p>Jeste li sigurni da želite obrisati liječnika?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Odustani</button>
+                <button type="button" id="confirm" class="btn btn-primary">Potvrdi</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+     $.ajax({
+        url: "/Physicians/GetAllPhysicians",
+        success: function (data) {
+            data.forEach(function (item) {
+                $("tbody").append(`<tr><td>${item.name}</td><td>${item.position}</td><td>${item.ssn}</td><td><a class="btn btn-primary" onclick="getAppointmentsByPhysicianId(${item.employeeId})">Pregledi</a>&nbsp;<a class="btn btn-secondary" onclick="update(${item.employeeId})">Uredi</a>&nbsp;<a class="btn btn-danger" onclick="odm(${item.employeeId})">Briši</a></td></tr>`);
+            });
+        },
+        error: function (data) {
+            console.log(data)
+        }
+    });
+
+     $("#search").on("keyup", function () {
+        $.ajax({
+            url: "/Physicians/GetAllPhysicians",
+            data: {'searchString': $("#search").val()},
+            success: function (data) {
+                $("tbody").empty();
+                data.forEach(function (item) {
+                   $("tbody").append(`<tr><td>${item.name}</td><td>${item.position}</td><td>${item.ssn}</td><td><a class="btn btn-primary" onclick="getAppointmentsByPhysicianId(${item.employeeId})">Pregledi</a>&nbsp;<a class="btn btn-secondary" onclick="update(${item.employeeId})">Uredi</a>&nbsp;<a class="btn btn-danger" onclick="odm(${item.employeeId})">Briši</a></td></tr>`);
+                });
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        });
+    });
+
+    function getAppointmentsByPhysicianId(employeeId) {
+        window.location.href = `/Appointments?PhysicianId=${employeeId}`
+    }
+
+    function update(employeeId) {
+        window.location.href = `/Physicians/Update/${employeeId}`
+    }
+
+   function odm(employeeId) {
+        $("#delId").val(employeeId);
+        $("#deleteModal").show();
+    }
+
+    $("#confirm").on("click", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: "DELETE",
+            url: "Physicians/Delete",
+            data: { 'id': $("#delId").val() },
+            success: function (data) {
+                $("#deleteModal").hide();
+                window.location.reload()
+            }
+        })
+    })
+</script>

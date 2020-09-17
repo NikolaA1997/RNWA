@@ -1,0 +1,86 @@
+@model MVC.Models.Appointment
+
+@{
+    ViewData["Title"] = "Dodaj pregled";
+}
+
+<div class="container-fluid">
+    <form id="createForm">       
+        <div class="form-group">
+            <label>Pacijent</label>
+            <select class="form-control" asp-for="@Model.Patient">
+                <option selected disabled>Odaberite pacijenta</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Liječnik</label>
+            <select class="form-control" asp-for="@Model.Physician">
+                <option selected disabled>Odaberite liječnika</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Početak</label>
+            <input asp-for="@Model.Start" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Kraj</label>
+            <input asp-for="@Model.End" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Soba</label>
+            <select class="form-control" asp-for="@Model.ExaminationRoom">
+                <option selected disabled>Odaberite sobu</option>
+                <option>A</option>
+                <option>B</option>
+                <option>C</option>
+            </select>
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-outline-secondary" asp-controller="Appointments" asp-action="Index">Odustani</a>
+            <button class="btn btn-primary" type="submit">Spremi</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    $("#createForm").on("submit", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: "POST",
+            url: "/Appointments/CreateAppointment",
+            data: $("#createForm").serialize(),
+            success: function (data) {
+                alert('Pregled uspjesno dodan.')
+                window.location.href = "/Appointments"
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        })
+    });
+
+    $.ajax({
+        url: "/Physicians/GetAllPhysicians",
+        success: function (data) {
+            data.forEach(function (item) {
+                $("#Physician").append(`<option value="${item.employeeId}">${item.name}</option>`)                
+            })
+        },
+        error: function (data) {
+            console.log(data)
+        }
+    })
+
+    $.ajax({
+        url: "/Patients/GetAllPatients",
+        success: function (data) {
+            data.forEach(function (item) {
+                $("#Patient").append(`<option value="${item.ssn}">${item.name}</option>`)                
+            })
+        },
+        error: function (data) {
+            console.log(data)
+        }
+    })
+</script>

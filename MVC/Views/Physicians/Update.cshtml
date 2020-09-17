@@ -1,0 +1,46 @@
+@model MVC.Models.Physician
+
+@{
+    ViewData["Title"] = "Uredi liječnika";
+}
+
+<div class="container-fluid">
+    <form id="updateForm">
+        <input type="hidden" asp-for="@Model.EmployeeId" />
+        <div class="form-group">
+            <label>Ime i prezime</label>
+            <input asp-for="@Model.Name" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Radno mjesto</label>
+            <input asp-for="@Model.Position" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Broj socijalnog osiguranja</label>
+            <input asp-for="@Model.Ssn" class="form-control" />
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-outline-secondary" asp-controller="Physicians" asp-action="Index">Odustani</a>
+            <button class="btn btn-primary" type="submit">Spremi</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    $("#updateForm").on("submit", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: "PUT",
+            url: "/Physicians/UpdatePhysician",
+            data: $("#updateForm").serialize(),
+            success: function (data) {
+                alert('Uspješno uređen liječnik.')
+                window.location.href = "/Physicians/Index"
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        })
+    });
+</script>

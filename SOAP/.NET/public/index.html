@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <style>
+            .empForms {margin: 15px}
+            </style>
+    </head>
+    <body>
+        <form id="empForm" class="empForms">
+            <label for="empId">EmployeeID:</label><br />
+            <input type="text" id="empId" name="empId" /><br />
+            <input type="submit" value="Submit" />
+        </form>
+
+        <div class="container-fluid">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>                    
+                        <th scope="col">Id</th>
+                        <th scope="col">Ime i prezime</th>
+                        <th scope="col">Radno mjesto</th>
+                        <th scope="col">Broj socijalnog osiguranja</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
+
+<script>
+    $("#empForm").on("submit", function (e) {
+        $("tbody tr").remove();
+        e.preventDefault();
+        $.ajax({
+            url: "http://localhost:5000/Service.asmx",
+            type: "POST",
+            dataType: "xml",
+            data: `<?xml version="1.0" encoding="utf-8"?>
+                        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+                            <soap:Body>
+                                <GetPhysician xmlns="http://tempuri.org/">
+                                    <employeeId>${$('#empId').val()}</employeeId>  
+                                </GetPhysician>
+                            </soap:Body>
+                        </soap:Envelope>`,
+            processData: false,
+            dataType : "xml",
+            contentType : "application/xml",
+            mimeType : "application/xml",
+            success: function (data) {
+                var empId = data.getElementsByTagName("EmployeeId")[0].innerHTML;
+                var name = data.getElementsByTagName("Name")[0].innerHTML;
+                var pos = data.getElementsByTagName("Position")[0].innerHTML;
+                var ssn = data.getElementsByTagName("Ssn")[0].innerHTML;
+                $("tbody").append(`<tr><td>${empId}</td><td>${name}</td><td>${pos}</td><td>${ssn}</td></tr>`);
+            },
+            error: function (data) {
+                console.log(data);
+            },
+        });
+    });
+</script>

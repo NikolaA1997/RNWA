@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="RNWA projekt">
+    <meta name="keywords" content="HTML,CSS,JavaScript">
+    <meta name="author" content="Vinko Soldo, Nikola Andric">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>RNWA Projekt</title>
+    <style>
+        body,
+        html {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            margin: 0px !important;
+        }
+        
+        .grid-container {
+            height: 100%;
+            display: grid;
+            width: 100%;
+            grid-template-columns: 15% 85%;
+            grid-template-rows: 60px 100% 100px;
+            gap: 0px 0px;
+            grid-template-areas: "header header" "sidebar mainArea" "sidebar footer";
+        }
+        
+        .header {
+            grid-area: header;
+            background: #083B6E;
+            display: flex;
+            align-items: center;
+            padding-left: 1em;
+            color: #fff;
+        }
+        
+        .sidebar {
+            color: #4D4D4D;
+            font-size: 18px;
+            flex-direction: column;
+            background: #E2E2E2;
+            grid-area: sidebar;
+            height: 100%;
+        }
+        
+        .sidebar .navWrapper {
+            margin-bottom: 1.5em !important;
+        }
+        
+        .mainArea {
+            height: 100%;
+            grid-area: mainArea;
+            padding: 3em;
+            font-size: 16px;
+            color: #4D4D4D
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        td,
+        th {
+            text-align: left;
+            padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+        
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .emailPng {
+            filter: invert(15%);
+            margin-right: 1em;
+            height: 12px;
+            margin-left: 5px;
+        }
+        
+        .emailWrapper {
+            height: 50px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        
+        .nav {
+            margin-top: 1em;
+            padding: 10%;
+        }
+        
+        .mainAreaPng {
+            width: 50%;
+        }
+        
+        .emailLink {
+            display: flex;
+            align-items: center;
+        }
+        
+        .imgWrapper {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .footer {
+            background: #748596;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            grid-area: footer;
+        }
+        
+        .copyright {
+            color: #1B1B1B;
+            font-size: 13px;
+        }
+        
+        .tableWrapper {
+            border: 1px solid #dddddd;
+            max-width: 100%;
+            overflow-x: auto;
+        }
+        
+        .navWrapper {
+            display: flex;
+            align-items: center;
+        }
+        
+        .emailLink .navPng {
+            margin-right: 5px;
+            height: 18px;
+            filter: invert(20%);
+            color: #4D4D4D !important;
+        }
+        
+        @media only screen and (max-width: 900px) {
+            .sidebar {
+                font-size: 14px !important;
+            }
+            .mainAreaPng {
+                width: 100%;
+            }
+            .grid-container {
+                grid-template-columns: 25% 75%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grid-container">
+        <div class="header">
+            HOSPITAL
+        </div>
+        <div class="sidebar">
+            <div class="nav">
+                <div class="navWrapper">
+                    <a class="emailLink" href="http://fsre.sum.ba/naslovnica/" target="_blank">
+                        <img class="navPng" src="https://cdn.onlinewebfonts.com/svg/img_364590.png" alt="">
+                        <div>FSRE</div>
+                    </a>
+                </div>
+                <div>
+                    <a class="emailLink" href="https://www.sum.ba/" target="_blank">
+                        <img class="navPng" src="http://getdrawings.com/free-icon-bw/headquarters-icon-14.png" alt="">
+                        <div>SUM Mostar</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="mainArea">
+            <h1>Lorem Ipsum</h1>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat dolorem labore pariatur delectus iusto facilis deserunt ab omnis aut? Omnis numquam fuga esse dolores illo! Excepturi, ducimus? Et, cum cupiditate! Lorem, ipsum dolor sit amet
+                consectetur adipisicing elit. Fugiat dolorem labore pariatur delectus iusto facilis deserunt ab omnis aut? Omnis numquam fuga esse dolores illo! Excepturi, ducimus? Et, cum cupiditate! Lorem, ipsum dolor sit amet consectetur adipisicing
+                elit. Fugiat dolorem labore pariatur delectus iusto facilis deserunt ab omnis aut? Omnis numquam fuga esse dolores illo! Excepturi, ducimus? Et, cum cupiditate!
+            </p>
+            <div class="imgWrapper">
+                <img class="mainAreaPng" src="https://image.freepik.com/free-vector/flat-hospital-building-illustration_1344-105.jpg" alt="Hospital">
+            </div>
+            <h2>Fugiat dolorem labore</h2>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat dolorem labore pariatur delectus iusto facilis deserunt ab omnis aut? Omnis numquam fuga esse dolores illo! Excepturi, ducimus? Et, cum cupiditate!</p>
+            <div class="tableWrapper">
+                <table id="customers">
+                    <tr>
+                        <th>Company</th>
+                        <th>Contact</th>
+                        <th>Country</th>
+                    </tr>
+                    <tr>
+                        <td>Alfreds Futterkiste</td>
+                        <td>Maria Anders</td>
+                        <td>Germany</td>
+                    </tr>
+                    <tr class="alt">
+                        <td>Berglunds snabbksp</td>
+                        <td>Christina Berglund</td>
+                        <td>Sweden</td>
+                    </tr>
+                    <tr>
+                        <td>Centro comercial Moctezuma</td>
+                        <td>Francisco Chang</td>
+                        <td>Mexico</td>
+                    </tr>
+                    <tr class="alt">
+                        <td>Ernst Handel</td>
+                        <td>Roland Mendel</td>
+                        <td>Austria</td>
+                    </tr>
+                    <tr>
+                        <td>Island Trading</td>
+                        <td>Helen Bennett</td>
+                        <td>UK</td>
+                    </tr>
+                    <tr class="alt">
+                        <td>Koniglich Essen</td>
+                        <td>Philip Cramer</td>
+                        <td>Germany</td>
+                    </tr>
+                    <tr>
+                        <td>Laughing Bacchus Winecellars</td>
+                        <td>Yoshi Tannamuri</td>
+                        <td>Canada</td>
+                    </tr>
+                    <tr class="alt">
+                        <td>Magazzini Alimentari Riuniti</td>
+                        <td>Giovanni Rovelli</td>
+                        <td>Italy</td>
+                    </tr>
+                    <tr>
+                        <td>North/South</td>
+                        <td>Simon Crowther</td>
+                        <td>UK</td>
+                    </tr>
+                    <tr class="alt">
+                        <td>Paris specialitts</td>
+                        <td>Marie Bertrand</td>
+                        <td>France</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="emails">
+                <div class="emailWrapper">
+                    <a class="emailLink" href="mailto:vinkosoldo98@hotmail.com" target="_blank">
+                        <div class="copyright">Vinko Soldo</div>
+                        <img class="emailPng" src="https://pluspng.com/img-png/email-icon-png-download-icons-logos-emojis-email-icons-2400.png" alt="">
+                    </a>
+                    <a class="emailLink" href="mailto:andric.nikola1997@gmail.com" target="_blank">
+                        <div class="copyright">Nikola Andric</div>
+                        <img class="emailPng" src="https://pluspng.com/img-png/email-icon-png-download-icons-logos-emojis-email-icons-2400.png" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="copyright">&copy; Copyright 2020 </div>
+        </div>
+    </div>
+</body>
+
+</html>

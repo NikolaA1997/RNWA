@@ -1,0 +1,54 @@
+@model MVC.Models.Appointment
+
+@{
+    ViewData["Title"] = "Uredi pregled";
+}
+
+<div class="container-fluid">
+    <form id="updateForm">
+        <input type="hidden" asp-for="@Model.AppointmentId" />
+        <div class="form-group">
+            <label>Pacijent</label>
+            <input asp-for="@Model.Patient" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Liječnik</label>
+            <input asp-for="@Model.Physician" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Početak</label>
+            <input asp-for="@Model.Start" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>End</label>
+            <input asp-for="@Model.End" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Soba</label>
+            <input asp-for="@Model.ExaminationRoom" class="form-control" />
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-outline-secondary" asp-controller="Physicians" asp-action="Index">Odustani</a>
+            <button class="btn btn-primary" type="submit">Spremi</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    $("#updateForm").on("submit", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: "PUT",
+            url: "/Appointments/UpdateAppointment",
+            data: $("#updateForm").serialize(),
+            success: function (data) {
+                alert('Uspješno uređen pregled.')
+                window.location.href = "/Appointments/Index"
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        })
+    });
+</script>

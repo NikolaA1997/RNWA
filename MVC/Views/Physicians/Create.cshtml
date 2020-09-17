@@ -1,0 +1,45 @@
+@model MVC.Models.Physician
+
+@{
+    ViewData["Title"] = "Dodaj liječnika";
+}
+
+<div class="container-fluid">
+    <form id="createForm">       
+        <div class="form-group">
+            <label>Ime i Prezime</label>
+            <input asp-for="@Model.Name" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Radno mjesto</label>
+            <input asp-for="@Model.Position" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Broj socijalnog osiguranja</label>
+            <input asp-for="@Model.Ssn" class="form-control" />
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-outline-secondary" asp-controller="Physicians" asp-action="Index">Odustani</a>
+            <button class="btn btn-primary" type="submit">Spremi</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    $("#createForm").on("submit", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: "POST",
+            url: "/Physicians/CreatePhysician",
+            data: $("#createForm").serialize(),
+            success: function (data) {
+                alert('Lijecnik uspjesno dodan.')
+                window.location.href = "/Physicians"
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        })
+    });
+</script>
