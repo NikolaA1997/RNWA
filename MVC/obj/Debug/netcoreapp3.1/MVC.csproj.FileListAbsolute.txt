@@ -171,3 +171,4 @@
 /home/nikola/Desktop/Development/FAX/C#/rnwa/MVC/obj/Debug/netcoreapp3.1/Razor/Views/Patients/Update.cshtml.g.cs
 /home/nikola/Desktop/Development/FAX/C#/rnwa/MVC/obj/Debug/netcoreapp3.1/Razor/Views/Appointments/Update.cshtml.g.cs
 /home/nikola/Desktop/Development/FAX/C#/rnwa/MVC/obj/Debug/netcoreapp3.1/Razor/Views/Appointments/Index.cshtml.g.cs
+/home/nikola/Desktop/Development/FAX/C#/rnwa/MVC/obj/Debug/netcoreapp3.1/Razor/Views/Account/Index.cshtml.g.cs

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,16 +14,21 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Hospital</a>
+                @if (@Context.Session.GetString("username") == null)
+                {
+                    <a class="navbar-brand" asp-area="" asp-controller="account" asp-action="index">Hospital</a>
+                }
+                else {
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Hospital</a>
+                }
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
+                        @if (@Context.Session.GetString("username") != null)
+                        {
                          <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Physicians" asp-action="Index">Liječnici</a>
                         </li>
@@ -30,6 +37,14 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Appointments" asp-action="Index">Pregledi</a>
+                        </li>
+                        }
+                        <li class="nav-item" style="margin-left: 75%;">
+                            @Context.Session.GetString("username")
+                            @if (@Context.Session.GetString("username") != null)
+                            {
+                                <a asp-controller="account" asp-action="logout">Logout</a>
+                            }
                         </li>
                     </ul>
                 </div>

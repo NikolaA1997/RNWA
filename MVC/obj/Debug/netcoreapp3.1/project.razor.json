@@ -14397,6 +14397,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/nikola/Desktop/Development/FAX/C#/rnwa/MVC/Views/Account/Index.cshtml",
+      "TargetPath": "Views\\Account\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/nikola/Desktop/Development/FAX/C#/rnwa/MVC/Views/Appointments/Index.cshtml",
       "TargetPath": "Views\\Appointments\\Index.cshtml",
       "FileKind": "mvc"

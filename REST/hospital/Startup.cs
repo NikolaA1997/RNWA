@@ -10,6 +10,7 @@ using AutoMapper;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using Microsoft.OpenApi.Models;
+using hospital.Middlewares;
 
 namespace hospital
 {
@@ -61,6 +62,8 @@ namespace hospital
             });
 
             app.UseRouting();
+
+            app.UseMiddleware<BasicAuthenticationMiddleware>();
 
             app.UseAuthorization();
 
